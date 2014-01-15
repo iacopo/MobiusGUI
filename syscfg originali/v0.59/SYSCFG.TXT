@@ -1,0 +1,34 @@
+Date time=[2013/01/30-18:32:21];date time setting,format yyyy/mm/dd hh:mm:ss
+
+Video Mode 1 resolution=[0];Movie resolution setting,0:1080p(Large AOV),1:1080p(Small AOV),2:720p(Large AOV),3:720p(Small AOV)
+Video Mode 1 Frame Rate=[2];Movie frame rate setting,1:60fps (only for 720p small AOV), 2:30fps
+Video Mode 2 resolution=[3];Movie resolution setting,0:1080p(Large AOV),1:1080p(Small AOV),2:720p(Large AOV),3:720p(Small AOV)
+Video Mode 2 Frame Rate=[1];Movie frame rate setting,1:60fps (only for 720p small AOV), 2:30fps
+
+Photo Mode Capture Size=[0];set photo size,0:2304x1536,1:1920x1080,2:1280x720
+Set Time Lapse Shooting=[0],0:off,1:0.25s,2:0.5s,3:1s,4:2s,5:5s,6:10s,7:30s,8:60s
+Photo Flip=[0];set Photo rotate,0:off,1:flip on
+
+Movie cycle time=[2];movie cycle time,0:3 minutes,1:5 minutes,2:10 minutes,3:15 minutes,4:max to 4G byte,
+Movie Loop Recording=[0];set loop recording on or off,0:off,1:on,
+Time stamp=[1];set date/time stamp on or off,0:off,1:on,
+Movie sound=[1];set movie sound,0:mute,1:on,
+Movie Flip=[0];set movie rotate,0:both off,1:mode 1 on and mode 2 off,2:mode 1 off and mode 2 on,3:both on,
+Movie quality=[1];set movie quality,set movie data rate,0:Super,1:Standard,2:Low,
+Movie high dynamic range=[0];set movie high dynamic range,0:off,1:on,
+
+Power on=[1];set system  power on time,0:delay,1:fast
+Power off=[1];set system auto power off time when system pending,0:off,1:30 seconds,2:1 minutes,3:2 minutes,
+Auto Record with External Power=[0];set connect with power to start video recording automatically,0:off,1:on,
+One Power Button to Auto Record=[0];set press power key to start video recording automatically,0:off,1:on,
+Auto Off with External Power disconnected=[0],0:Immediately,1:delay 10s;2:record to low battery power off,
+LED=[1];set LED flicker when recording,0:off,1:on,
+Charge from USB Host=[0]; when connecting with USB host, charge camera or not,0:on,1:off
+Lens option =[0];select lens,0:lens A,1:lens B
+Light frequency =[1];set light source frequency,0:50 HZ,1:60 HZ
+
+TV out=[0];set Tv out,0:NTSC,1:PAL,
+TV Display Ratio=[0];set display ratio,0:4*3,1:16*9
+
+{TLCAM MOV:TLCAM Mobius ActionCam 2013/11/22 v0.59}
+{LDTLCAM,v003}
