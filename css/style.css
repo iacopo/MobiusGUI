@@ -74,6 +74,44 @@ textarea{
    ###### !START! ######
 \* ##################### */
 
+/* ########################## *\
+   ###### !typography! ######
+\* ########################## */
+
+.small{
+	font-size: .8em;
+}
+
+.regular{
+	font-size: 1em;
+}
+
+.big{
+	font-size: 1.2em;
+	font-weight: bold;
+}
+
+h1{
+	font-size: 1.5em;
+}
+
+
+/* ############################ *\
+   ###### !All the rest! ######
+\* ############################ */
+
+body{
+	font-family: 'Exo 2', sans-serif;
+}
+
+.container_12{
+	margin-bottom: 30px;
+}
+
+.radioTabs{
+	margin: 15px 0;
+}
+
 #drop_area {
 	display: table-cell;
 	width: 500px;
@@ -85,25 +123,31 @@ textarea{
 	vertical-align: middle;
 }
 
+input[type=radio]{
+	display:none;
+	/*margin:10px;*/
+}
 
+div label:last-of-type {
+	border-radius: 0 8px 8px 0;
+}
 
-  input[type=radio]
- {
-    display:none; 
-    margin:10px;
- }
-input[type=radio] + label 
- {
-    display:inline-block;
-    margin:-2px;
-    padding: 4px 12px;
-    background-color: #3C79DE;
-    border-color: #ddd;
- 
- }
+div label:first-of-type {
+	border-radius: 8px 0 0 8px;
+}
 
-input[type=radio]:checked + label
- { 
-   background-image: none;
-    background-color:#E7E7E7;
- }
+input[type=radio] + label{
+	text-align: center;
+	display: inline-block;
+	margin:-2px;
+	padding: 8px 12px;
+	background-color: #E7E7E7;
+	color: #666;
+}
+
+input[type=radio]:checked + label{ 
+	background-image: none;
+	background-color:#2C9AD1;
+	color: #fff;
+}
+

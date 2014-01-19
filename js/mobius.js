@@ -30,9 +30,47 @@ function applySettings() {
 	//read value of each input, put it back to the main variable 
 	for (var i = 0; i < parameters.length; i++) {
 
-		if ($('[name='+i+']').is('[type=radio]')) {
+		if ( $('[name='+i+']').is('[type=radio]') ) {
 			var newValue = $('[name='+i+']:checked').val();
-			console.log('[name='+i+']='+newValue);
+			// console.log('[name='+i+']='+newValue);
+			
+			if (i == 1) {
+				if ( $('[name='+i+']:checked').val()==4 ){
+					newValue = 3;
+					fpsValue = 1;
+					var nth = 0;
+					SYSCFG = SYSCFG.replace(/[^[]+(?=\])/g, function(match) {
+						return ++nth == 2+1 ? fpsValue : match;
+					});
+				}
+				if ( $('[name='+i+']:checked').val()<4 ){
+					fpsValue = 2;
+					var nth = 0;
+					SYSCFG = SYSCFG.replace(/[^[]+(?=\])/g, function(match) {
+						return ++nth == 2+1 ? fpsValue : match;
+					});
+					console.log("stavolta passo di qua");
+				}
+			}
+
+			if (i == 3) {
+				if ( $('[name='+i+']:checked').val()==4 ){
+					newValue = 3;
+					fpsValue = 1;
+					var nth = 0;
+					SYSCFG = SYSCFG.replace(/[^[]+(?=\])/g, function(match) {
+						return ++nth == 4+1 ? fpsValue : match;
+					});
+				}
+				if ( $('[name='+i+']:checked').val()<4 ){
+					fpsValue = 2;
+					var nth = 0;
+					SYSCFG = SYSCFG.replace(/[^[]+(?=\])/g, function(match) {
+						return ++nth == 4+1 ? fpsValue : match;
+					});
+					console.log("stavolta passo di qua");
+				}
+			}
 
 			var nth = 0;
 			SYSCFG = SYSCFG.replace(/[^[]+(?=\])/g, function(match) {
@@ -42,7 +80,7 @@ function applySettings() {
 		}
 		if ($('[name='+i+']').is('[type=number]')) {
 			var newValue = $('[name='+i+']').val();
-			console.log('[name='+i+']='+newValue);
+			// console.log('[name='+i+']='+newValue);
 
 			var nth = 0;
 			SYSCFG = SYSCFG.replace(/[^[]+(?=\])/g, function(match) {
@@ -50,8 +88,18 @@ function applySettings() {
 			});
 		}
 	}
+
+	var video1Flip = parseInt($('[name=video1Flip]:checked').val());
+	var video2Flip = parseInt($('[name=video2Flip]:checked').val())*2; //multiply x2 so that it returns either 0 or 2, so the sum of this + video1Flip returns a value [0-3].
+	var videosFlip = video1Flip + video2Flip;
+
+	var nth = 0;
+	SYSCFG = SYSCFG.replace(/[^[]+(?=\])/g, function(match) {
+		return ++nth == 12+1 ? videosFlip : match;
+	});
+
 	console.log(SYSCFG);
-	SaveSYSCFG(); //then save the file!
+	//SaveSYSCFG(); //then save the file!
 }
 
 function displaySettings(){
