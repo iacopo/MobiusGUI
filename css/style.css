@@ -66,3 +66,44 @@ select,
 textarea{
 	font:inherit;
 }
+
+
+
+
+/* ##################### *\
+   ###### !START! ######
+\* ##################### */
+
+#drop_area {
+	display: table-cell;
+	width: 500px;
+	height: 100px;
+	background: #eeeeee;
+	border: solid 2px #666;
+	border-radius: 20px;
+	text-align:center;
+	vertical-align: middle;
+}
+
+
+
+  input[type=radio]
+ {
+    display:none; 
+    margin:10px;
+ }
+input[type=radio] + label 
+ {
+    display:inline-block;
+    margin:-2px;
+    padding: 4px 12px;
+    background-color: #3C79DE;
+    border-color: #ddd;
+ 
+ }
+
+input[type=radio]:checked + label
+ { 
+   background-image: none;
+    background-color:#E7E7E7;
+ }

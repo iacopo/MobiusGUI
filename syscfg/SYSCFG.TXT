@@ -7,7 +7,7 @@ Video Mode 2 Frame Rate=[1];Movie frame rate setting,1:60fps (only for 720p smal
 
 Photo Mode Capture Size=[0];set photo size,0:2304x1536,1:1920x1080,2:1280x720
 Set Time Lapse Shooting=[0],0:off,1:0.25s,2:0.5s,3:1s,4:2s,5:5s,6:10s,7:30s,8:60s
-Photo Flip=[0];set Photo rotate,0:off,1:flip on
+Photo Flip=[1];set Photo rotate,0:off,1:flip on
 
 Movie cycle time=[2];movie cycle time,0:3 minutes,1:5 minutes,2:10 minutes,3:15 minutes,4:max to 4G byte,
 Movie Loop Recording=[0];set loop recording on or off,0:off,1:on,

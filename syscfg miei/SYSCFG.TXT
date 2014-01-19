@@ -1,6 +1,6 @@
 Date time=[????/??/??-??:??:??];date time setting,format yyyy/mm/dd hh:mm:ss
 
-Video Mode 1 resolution=[0];Movie resolution setting,0:1080p(Large AOV),1:1080p(Small AOV),2:720p(Large AOV),3:720p(Small AOV)
+Video Mode 1 resolution=[2];Movie resolution setting,0:1080p(Large AOV),1:1080p(Small AOV),2:720p(Large AOV),3:720p(Small AOV)
 Video Mode 1 Frame Rate=[2];Movie frame rate setting,1:60fps (only for 720p small AOV), 2:30fps
 Video Mode 2 resolution=[3];Movie resolution setting,0:1080p(Large AOV),1:1080p(Small AOV),2:720p(Large AOV),3:720p(Small AOV)
 Video Mode 2 Frame Rate=[1];Movie frame rate setting,1:60fps (only for 720p small AOV), 2:30fps
