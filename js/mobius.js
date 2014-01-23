@@ -6,14 +6,15 @@ var defaultCFG_URL = 'syscfg/SYSCFG.TXT'; //this is where I put the default SYSC
 
 var SYSCFG;
 var parameters;
+var defaultParameters;
+var version;
 
 $(document).ready(function(){
 	$.get(defaultCFG_URL, function(content) {
 		/* $("#displayFile").text(content); //debug display content of txt file */
-
 		SYSCFG = content;
-		parameters = SYSCFG.match(/[^[]+(?=\])/g); //this generates an array that contains all the values found between brackets []
-		/* console.log(SYSCFG); */
+		updateParameters();
+		defaultParameters = parameters;
 		displaySettings();
 	});
 	
@@ -29,40 +30,36 @@ $(document).ready(function(){
 function applySettings() {
 	//read value of each input, put it back to the main variable 
 	for (var i = 0; i < parameters.length; i++) {
+		var element = $('[name='+i+']');
 
-		if ( $('[name='+i+']').is('[type=radio]') ) {
+		if ( element.is('[type=radio]') ) {
 			var newValue = $('[name='+i+']:checked').val();
 			// console.log('[name='+i+']='+newValue);
 			
-			if (i == 1) {
+			if (i == 1 || i == 3) {
+				prameterIndex = i+1;
 				if ( $('[name='+i+']:checked').val()==4 ){
 					newValue = 3;
 					fpsValue = 1;
-					changeParameter(2, fpsValue);
+					changeParameter(prameterIndex, fpsValue);
 				}
 				if ( $('[name='+i+']:checked').val()<4 ){
 					fpsValue = 2;
-					changeParameter(2, fpsValue);
-				}
-			}
-
-			if (i == 3) {
-				if ( $('[name='+i+']:checked').val()==4 ){
-					newValue = 3;
-					fpsValue = 1;
-					changeParameter(4, fpsValue);
-				}
-				if ( $('[name='+i+']:checked').val()<4 ){
-					fpsValue = 2;
-					changeParameter(4, fpsValue);
+					changeParameter(prameterIndex, fpsValue);
 				}
 			}
 			changeParameter(i, newValue);
 		}
-		if ($('[name='+i+']').is('[type=number]')) {
-			var newValue = $('[name='+i+']').val();
-			// console.log('[name='+i+']='+newValue);
-			changeParameter(i, newValue);
+		if (element.is('[type=number]')) {
+			var newValue = element.val();
+			if ( parseInt(element.attr('min')) <= parseInt(newValue) && parseInt(newValue) <= parseInt(element.attr('max')) ){
+				changeParameter(i, newValue);
+			}
+			else {
+				element.val(defaultParameters[i]);
+				whatswrong = element.closest('div').siblings().text();
+				alert("One or more values entered for " + whatswrong + "\nare out of the acceptable range.\nI will replace it with the default value.\n\nThe range is: [" + element.attr('min') + ";" + element.attr('max') + "]");
+			}
 		}
 	}
 
@@ -73,16 +70,17 @@ function applySettings() {
 	changeParameter(12, videosFlip);
 
 	// console.log(SYSCFG);
-	SaveSYSCFG(); //then save the file!
+	//SaveSYSCFG(); //then save the file!
 }
 
 function displaySettings(){
 	for (var i = 0; i < parameters.length; i++) {
 		//i=1 because I skip date/time settings
-		// console.log('[name='+i+']='+parameters[i]);
+		checkMinMax(i); //check if the parameter is in its range
+
 		//check if element exists, if it does, assign it's value.
 		if ($('[name='+i+']').length != 0) {
-			if ($('[name='+i+']').is('[type=radio]')) 		{$('[name='+i+']')[parameters[i]].checked = true;};
+			if ($('[name='+i+']').is('[type=radio]')) 	{$('[name='+i+']')[parameters[i]].checked = true;};
 			if ($('[name='+i+']').is('[type=number]')) 	{$('[name='+i+']').val(parameters[i]);}
 		};
 	}
@@ -113,9 +111,6 @@ function displaySettings(){
 	}
 }
 
-
-
-
 //Drag and drop file reading... user drops a SYSCFG.TXT on the drop area, and script reads it.
  
 function handleFileSelect(evt) {
@@ -133,8 +128,11 @@ function handleFileSelect(evt) {
 	reader.onloadend = function(evt) {
 		if (evt.target.readyState == FileReader.DONE) { // DONE == 2
 			SYSCFG = evt.target.result;
-			parameters = SYSCFG.match(/[^[]+(?=\])/g);
+			updateParameters();
 			// console.log(SYSCFG);
+			if(version[0] != "v1.13"){
+				alert("Your firmware is different from version 1.13.\nPlease be carefull as this may, or may not work at all!");
+			}
 			displaySettings();
 		}
 	};
@@ -158,4 +156,49 @@ function changeParameter(position, text){
 function SaveSYSCFG() {
 	var blob = new Blob([SYSCFG], {type: "text/plain;charset=utf-8"});
 	saveAs(blob, "SYSCFG.TXT");
+}
+
+function updateParameters() {
+	parameters = SYSCFG.match(/[^[]+(?=\])/g);//this generates an array that contains all the values found between brackets []
+	version = SYSCFG.match(/v[^{]+(?=\})/g);
+	console.log(version[0]);
+}
+
+function checkMinMax(i) {
+	maxvalue = 10;
+	minvalue = 0;
+
+	switch(i) {
+		case 2: case 4:
+		maxvalue = 2;
+		minvalue = 1;
+		break;
+
+		case 12:
+		maxvalue = 3;
+	}
+
+	if ($('[name='+i+']').length != 0){
+		if ( $('[name='+i+']').attr('maxval') ){
+			maxvalue = $('[name='+i+']').attr('maxval');
+			minvalue = $('[name='+i+']').attr('minval');
+		}
+		else if( $('[name='+i+']').attr('max') ){
+			maxvalue = $('[name='+i+']').attr('max');
+			minvalue = $('[name='+i+']').attr('min');
+		}
+		else {
+			//if not specified, try to gess it by the number of options with the same name
+			maxvalue = $('[name='+i+']').length-1;
+			minvalue = 0;
+		}
+	}
+
+	// console.log("parameter[" + i + "] MIN=" + minvalue + " MAX=" + maxvalue );
+
+	if (parameters[i] > maxvalue || parameters[i] < minvalue) {
+		parameters[i] = defaultParameters[i];
+		console.log("wrong" + i);
+		alert("One or more parameters from your SYSCFG.TXT file are out of their acceptable range.\nI'll use defaults instead.");
+	}
 }
