@@ -38,11 +38,18 @@ function applySettings() {
 				if ( $('[name='+i+']:checked').val()==4 ){
 					newValue = 3;
 					fpsValue = 1;
-					changeParameter(2, fpsValue);
+					var nth = 0;
+					SYSCFG = SYSCFG.replace(/[^[]+(?=\])/g, function(match) {
+						return ++nth == 2+1 ? fpsValue : match;
+					});
 				}
 				if ( $('[name='+i+']:checked').val()<4 ){
 					fpsValue = 2;
-					changeParameter(2, fpsValue);
+					var nth = 0;
+					SYSCFG = SYSCFG.replace(/[^[]+(?=\])/g, function(match) {
+						return ++nth == 2+1 ? fpsValue : match;
+					});
+					console.log("stavolta passo di qua");
 				}
 			}
 
@@ -50,19 +57,35 @@ function applySettings() {
 				if ( $('[name='+i+']:checked').val()==4 ){
 					newValue = 3;
 					fpsValue = 1;
-					changeParameter(4, fpsValue);
+					var nth = 0;
+					SYSCFG = SYSCFG.replace(/[^[]+(?=\])/g, function(match) {
+						return ++nth == 4+1 ? fpsValue : match;
+					});
 				}
 				if ( $('[name='+i+']:checked').val()<4 ){
 					fpsValue = 2;
-					changeParameter(4, fpsValue);
+					var nth = 0;
+					SYSCFG = SYSCFG.replace(/[^[]+(?=\])/g, function(match) {
+						return ++nth == 4+1 ? fpsValue : match;
+					});
+					console.log("stavolta passo di qua");
 				}
 			}
-			changeParameter(i, newValue);
+
+			var nth = 0;
+			SYSCFG = SYSCFG.replace(/[^[]+(?=\])/g, function(match) {
+				return ++nth == i+1 ? newValue : match;
+			});
+
 		}
 		if ($('[name='+i+']').is('[type=number]')) {
 			var newValue = $('[name='+i+']').val();
 			// console.log('[name='+i+']='+newValue);
-			changeParameter(i, newValue);
+
+			var nth = 0;
+			SYSCFG = SYSCFG.replace(/[^[]+(?=\])/g, function(match) {
+				return ++nth == i+1 ? newValue : match;
+			});
 		}
 	}
 
@@ -70,10 +93,13 @@ function applySettings() {
 	var video2Flip = parseInt($('[name=video2Flip]:checked').val())*2; //multiply x2 so that it returns either 0 or 2, so the sum of this + video1Flip returns a value [0-3].
 	var videosFlip = video1Flip + video2Flip;
 
-	changeParameter(12, videosFlip);
+	var nth = 0;
+	SYSCFG = SYSCFG.replace(/[^[]+(?=\])/g, function(match) {
+		return ++nth == 12+1 ? videosFlip : match;
+	});
 
-	// console.log(SYSCFG);
-	SaveSYSCFG(); //then save the file!
+	console.log(SYSCFG);
+	//SaveSYSCFG(); //then save the file!
 }
 
 function displaySettings(){
@@ -146,13 +172,6 @@ function handleDragOver(evt) {
 	evt.stopPropagation();
 	evt.preventDefault();
 	evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
-}
-
-function changeParameter(position, text){
-	var nth = 0;
-	SYSCFG = SYSCFG.replace(/[^[]+(?=\])/g, function(match) {
-		return ++nth == position+1 ? text : match;
-	});
 }
 
 function SaveSYSCFG() {

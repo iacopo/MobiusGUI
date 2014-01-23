@@ -7,15 +7,15 @@ Video Mode 2 Frame Rate=[1];Movie frame rate setting,1:60fps (only for 720p smal
 
 Photo Mode Capture Size=[0];set photo size,0:2304x1536,1:1920x1080,2:1280x720
 Set Time Lapse Shooting=[0],0:off,1:0.25s,2:0.5s,3:1s,4:2s,5:5s,6:10s,7:30s,8:60s
-Photo Flip=[1];set Photo rotate,0:off,1:flip on
+Photo Flip=[0];set Photo rotate,0:off,1:flip on
 
 Movie cycle time=[2];movie cycle time,0:3 minutes,1:5 minutes,2:10 minutes,3:15 minutes,4:max to 4G byte,
 Movie Loop Recording=[0];set loop recording on or off,0:off,1:on,
 Time stamp=[0];set date/time stamp on or off,0:off,1:on,
 Movie sound=[1];set movie sound,0:mute,1:on,
 Movie Flip=[0];set movie rotate,0:both off,1:mode 1 on and mode 2 off,2:mode 1 off and mode 2 on,3:both on,
-Movie quality=[0];set movie quality,set movie data rate,0:Super,1:Standard,2:Low,
-Movie high dynamic range=[1];set movie high dynamic range,0:off,1:on,
+Movie quality=[1];set movie quality,set movie data rate,0:Super,1:Standard,2:Low,
+Movie high dynamic range=[0];set movie high dynamic range,0:off,1:on,
 
 Power on=[1];set system  power on time,0:delay,1:fast
 Power off=[1];set system auto power off time when system pending,0:off,1:30 seconds,2:1 minutes,3:2 minutes,
@@ -34,7 +34,7 @@ Motion Detect=[0];set motion detect,0:off,1:on
 Motion Detect Timeout=[2];set motion detect timeout,0:5s,1:15s,2:30s,3:60s
 Motion Detect Sensitivity=[0];set motion detect Sensitivity,0:high,1:nomal,2:low
 
-White Balance=[3];Set White Balance,0:Auto,1:Sunny,2:Cloudy,3:Tungsten,4:Fluorescent,5:Custom WB1,6:Custom WB2,7:Custom WB3
+White Balance=[0];Set White Balance,0:Auto,1:Sunny,2:Cloudy,3:Tungsten,4:Fluorescent,5:Custom WB1,6:Custom WB2,7:Custom WB3
 Sunny(5000-6500K) used for sunny with clear sky(Rgain=301,Ggain=256,Bgain=368);
 Cloudy(9000-10000K) used for shade or heavily overcast sky(Rgain=301,Ggain=256,Bgain=384);
 Tungsten(2500-3500K) used for Tungsten bulb (or called Incandescent light)(Rgain=184,Ggain=256,Bgain=711);
