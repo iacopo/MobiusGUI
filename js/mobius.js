@@ -70,7 +70,7 @@ function applySettings() {
 	changeParameter(12, videosFlip);
 
 	// console.log(SYSCFG);
-	//SaveSYSCFG(); //then save the file!
+	SaveSYSCFG(); //then save the file!
 }
 
 function displaySettings(){
