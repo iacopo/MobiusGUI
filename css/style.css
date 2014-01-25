@@ -95,6 +95,10 @@ textarea{
 	color: #288c81;
 }
 
+.red {
+	color: #ff3c1f;
+}
+
 p {
 	margin-top: 10px;
 	font-family: serif;
@@ -166,6 +170,13 @@ a, a:visited {
 	border-radius: 20px;
 	text-align: center;
 	line-height: 150px;
+
+	transition: background-color;
+	-webkit-transition: background-color .3s;
+}
+
+#drop_area.drag{
+	background-color: rgba(255,255,255,.4);
 }
 
 #drop_area:drop {
@@ -176,6 +187,18 @@ a, a:visited {
 	display: inline-block;
 	vertical-align: middle;
 	line-height: 1.3em;
+}
+
+/* !footer */
+
+.footer {
+	background: #288c81; /* Old browsers */
+
+	height: 100px;
+	width: 100%;
+	color: #fff;
+	text-align: center;
+	font-size: .8em;
 }
 
 
@@ -230,7 +253,7 @@ div label:first-of-type {
 input[type=radio] + label{
 	text-align: center;
 	display: inline-block;
-	margin:-2px;
+	margin: -2px;
 	padding: 8px 12px;
 	background-color: #E7E7E7;
 	color: #666;
@@ -256,6 +279,22 @@ input[type=radio]:checked + label{
 	font-size: 2em;
 }*/
 
+
+.topBarContainer {
+	height: 80px;
+}
+
+.topBar {
+	background-color: #fff;
+	background: #fff;
+	background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+	background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(255,255,255,1)), color-stop(100%, rgba(255,255,255,0)));
+	background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+	background: -o-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+	background: -ms-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+	background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c0fcf5', endColorstr='#ffffff', GradientType=0 );
+}
 
 .button {
 	cursor: pointer;
