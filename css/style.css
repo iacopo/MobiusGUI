@@ -99,16 +99,69 @@ textarea{
 	color: #ff3c1f;
 }
 
+.colonne {
+	-webkit-column-count: 2;
+	-moz-column-count: 2;
+	column-count: 2;
+	margin-top: 20px;
+}
+
 p {
-	margin-top: 10px;
-	font-family: serif;
-	font-size: 1.2em;
+	margin-top: 5px;
+	font-family: 'Droid Serif', serif;
+	font-size: 1em;
+}
+
+p a, p a:visited{
+	color: #999;
+}
+
+p a:hover {
+	color: #000;
+}
+
+p+p{
+	text-indent: 1em;
 }
 
 
 /* ############################ *\
    ###### !All the rest! ######
 \* ############################ */
+
+html, body{
+	height: 100%;
+}
+
+.page-wrap {
+	min-height: 100%;
+	/* equal to footer height */
+	margin-bottom: -100px; 
+}
+.page-wrap:after {
+	content: "";
+	display: block;
+}
+.footer, .page-wrap:after {
+	/* .push must be the same height as footer */
+	height: 100px; 
+}
+
+.footer {
+	background: #AFE990;
+	width: 100%;
+	color: #288c81;
+	text-align: center;
+	font-size: .8em;
+}
+
+.footer a, .footer a:visited {
+	color: #2c9ad1;
+}
+
+.footer a:hover {
+	color: #fff;
+}
 
 body{
 	font-family: 'Exo 2', sans-serif;
@@ -188,19 +241,6 @@ a, a:visited {
 	vertical-align: middle;
 	line-height: 1.3em;
 }
-
-/* !footer */
-
-.footer {
-	background: #288c81; /* Old browsers */
-
-	height: 100px;
-	width: 100%;
-	color: #fff;
-	text-align: center;
-	font-size: .8em;
-}
-
 
 /* !top bar */
 
@@ -334,7 +374,7 @@ input[type=number]:focus {
 }
 
 .wb-green {
-	color: #288c81;
+	color: #3daf2c; /* was #288c81;*/
 }
 
 .wb-blue {
