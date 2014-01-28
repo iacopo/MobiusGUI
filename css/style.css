@@ -251,12 +251,12 @@ a, a:visited {
 .topBar {
 	background-color: #fff;
 	background: #fff;
-	background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
-	background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(255,255,255,1)), color-stop(100%, rgba(255,255,255,0)));
-	background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
-	background: -o-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
-	background: -ms-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
-	background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+	background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,.8) 70%, rgba(255,255,255,0) 100%);
+	background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(255,255,255,1)), color-stop(70%, rgba(255,255,255,.8)), color-stop(100%, rgba(255,255,255,0)));
+	background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,.8) 70%, rgba(255,255,255,0) 100%);
+	background: -o-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,.8) 70%, rgba(255,255,255,0) 100%);
+	background: -ms-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,.8) 70%, rgba(255,255,255,0) 100%);
+	background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,.8) 70%, rgba(255,255,255,0) 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c0fcf5', endColorstr='#ffffff', GradientType=0 );
 }
 
@@ -337,10 +337,15 @@ div label:first-of-type {
 input[type=radio] + label{
 	text-align: center;
 	display: inline-block;
-	margin: -2px;
+	margin-left: -2px;
+	margin-right: -2px;
 	padding: 8px 12px;
 	background-color: #E7E7E7;
 	color: #666;
+}
+
+.radioTabs input[type=radio]:first-child + label{
+	margin-left: 0!important;
 }
 
 input[type=radio]:checked + label{ 
@@ -364,7 +369,7 @@ input[type=number] {
 }
 
 input[type=number]:focus {
-  box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+  box-shadow: 0 0 5px #3daf2c;
   padding: 3px 0px 3px 3px;
   margin: 5px 1px 3px 0px;
 }

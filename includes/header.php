@@ -24,7 +24,7 @@
 	<div class="page-wrap">
 		<div class="header">
 			<div class="container_12">
-				<div class="grid_4"><a href="/"><img src="img/logo.png" alt="Mobius GUI" class="logo"></a></div>
+				<div class="grid_4"><a href="index.php"><img src="img/logo.png" alt="Mobius GUI" class="logo"></a></div>
 				<div class="grid_8">
 					<ul class="menu">
 						<li><a href="instructions.php">Instructions</a></li>

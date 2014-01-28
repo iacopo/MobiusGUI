@@ -1,5 +1,5 @@
 <?php
-	$drop_area_text = '<a href="/">Back to the settings</a>';
+	$drop_area_text = '<a href="index.php">Back to the settings</a>';
 ?>
 <?php include('includes/header.php'); ?>
 

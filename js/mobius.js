@@ -99,102 +99,125 @@ function handleFileSelect(evt) {
 }
 
 function applySettings() {
+	//check for conflicts
+	checkConflictsOut();
+
 	//read value of each input, put it back to the main variable
-
 	for (var i = 0; i < parameters.length; i++) {
-		var element = $('[name='+i+']');
 
-		if ( element.is('[type=radio]') ) {
-			var newValue = $('[name='+i+']:checked').val();
-			// console.log('[name='+i+']='+newValue);
-			
-			if (i == 1 || i == 3) {
-				prameterIndex = i+1;
-				if ( $('[name='+i+']:checked').val()==4 ){
-					newValue = 3;
-					fpsValue = 1;
-					changeParameter(prameterIndex, fpsValue);
-				}
-				if ( $('[name='+i+']:checked').val()<4 ){
-					fpsValue = 2;
-					changeParameter(prameterIndex, fpsValue);
-				}
+		var newValue = readInputValue(i);
+
+		if (i == 1 || i == 3) {
+			prameterIndex = i+1;
+			if ( $('[name='+i+']:checked').val()==4 ){
+				newValue = 3;
+				writeParameter(prameterIndex, 1);
+				writeParameter(i, newValue);
 			}
-			changeParameter(i, newValue);
-		}
-		if (element.is('[type=number]')) {
-			var newValue = element.val();
-			if ( parseInt(element.attr('min')) <= parseInt(newValue) && parseInt(newValue) <= parseInt(element.attr('max')) ){
-				changeParameter(i, newValue);
-			}
-			else {
-				element.val(defaultParameters[i]);
-				whatswrong = element.closest('div').siblings().text();
-				alert("One or more values entered for " + whatswrong + "\nare out of the acceptable range.\nI will replace it with the default value.\n\nThe range is: [" + element.attr('min') + ";" + element.attr('max') + "]");
+			if ( $('[name='+i+']:checked').val()<4 ){
+				writeParameter(prameterIndex, 2);
+				writeParameter(i, newValue);
 			}
 		}
+		else if ( newValue ) { writeParameter(i, newValue); } // if (newValue) perchè non devo scrivere niente se non esiste il campo con il nome=i (ad esempio i==2 e i==4 non esistono)
+		// console.log('parameter' + i + " = " + parameters[i]);
 	}
 
-	var video1Flip = parseInt($('[name=video1Flip]:checked').val());
-	var video2Flip = parseInt($('[name=video2Flip]:checked').val())*2; //multiply x2 so that it returns either 0 or 2, so the sum of this + video1Flip returns a value [0-3].
+	
+
+	var video1Flip = readInputValue('video1Flip');
+	var video2Flip = readInputValue('video2Flip')*2; //multiply x2 so that it returns either 0 or 2, so the sum of this + video1Flip returns a value [0-3].
 	var videosFlip = video1Flip + video2Flip;
+	var videosFlip = parseInt(videosFlip, 4); //this is a nightmare......
 
-	changeParameter(12, videosFlip);
+	writeParameter(12, videosFlip);
 
-	// updateDate();
+	if (readInputValue('dateTime') == 1) { updateDate(); }
+	else {writeParameter(0, "????/??/??-??:??:??");}
 
-	// console.log(SYSCFG);
 	SaveSYSCFG(); //then save the file!
 }
 
 function displaySettings(){
 	for (var i = 0; i < parameters.length; i++) {
-		//i=1 because I skip date/time settings
 		checkMinMax(i); //check if the parameter is in its range
 
 		//check if element exists, if it does, assign it's value.
-		if ($('[name='+i+']').length != 0) {
-			if ($('[name='+i+']').is('[type=radio]')) 	{$('[name='+i+']')[parameters[i]].checked = true;};
-			if ($('[name='+i+']').is('[type=number]')) 	{$('[name='+i+']').val(parameters[i]);}
-		};
+		displayParameter(i, parameters[i]);
 	}
 
-	if (parameters[1]==3 && parameters[2]==1) {$('[name=1]')[4].checked = true;};
-	if (parameters[3]==3 && parameters[4]==1) {$('[name=3]')[4].checked = true;};
+	if (parameters[1]==3 && parameters[2]==1) {displayParameter(1, 4)}
+	if (parameters[3]==3 && parameters[4]==1) {displayParameter(3, 4)}
 
 	switch (parameters[12]) {
 		case "0": //both off
-			$('[name=video1Flip]')[0].checked = true;
-			$('[name=video2Flip]')[0].checked = true;
+			displayParameter('video1Flip', 0);
+			displayParameter('video2Flip', 0);
 		break;
 
 		case "1": //flip video1
-			$('[name=video1Flip]')[1].checked = true;
-			$('[name=video2Flip]')[0].checked = true;
+			displayParameter('video1Flip', 1);
+			displayParameter('video2Flip', 0);
 		break;
 
 		case "2": //flip video2
-			$('[name=video1Flip]')[0].checked = true;
-			$('[name=video2Flip]')[1].checked = true;
+			displayParameter('video1Flip', 0);
+			displayParameter('video2Flip', 1);
 		break;
 
 		case "3": //flip both
-			$('[name=video1Flip]')[1].checked = true;
-			$('[name=video2Flip]')[1].checked = true;
+			displayParameter('video1Flip', 1);
+			displayParameter('video2Flip', 1);
 		break;
 	}
+	checkConflictsIn(); //check if there's no conflict between parameters
 }
 
 //Drag and drop file reading... user drops a SYSCFG.TXT on the drop area, and script reads it.
 
+function displayParameter(index, value){
+	//check if element exists, if it does, assign its value to it.
+	var input = $('[name='+index+']');
+	if (input.length != 0) {
+		if ( input.is('[type=radio]') ) 		{input[value].checked = true;}
+		else if ( input.is('[type=number]') )	{
+			if (value.charAt(0) == "+"){input.val(value.substring(1));} //if strings begins with + remove the + sign
+			else {input.val(value);}
+		}
+	}
+}
 
-function changeParameter(position, text){
+function readInputValue(index){
+	var input = $('[name='+index+']');
+	if (input.length != 0) {
+		if ( input.is('[type=radio]') )		{
+			if ($('[name='+index+']:checked').val() == 0) {return "0";} //this is because javascript hates values of 0
+			else {return parseInt( $('[name='+index+']:checked').val() );}
+		}
+		else if ( input.is('[type=number]') )	{ 
+			if ( parseInt(input.attr('min')) <= parseInt(input.val()) && parseInt(input.val()) <= parseInt(input.attr('max')) ){
+				if (input.val() == 0) {return "0";} //this is because javascript hates values of 0
+				else {return parseInt( input.val() );}
+			}
+			else {
+				whatswrong = input.closest('div').siblings().text();
+				alert("One or more values entered for " + whatswrong + "\nare out of the acceptable range.\nI will replace it with the default value.\n\nThe range is: [" + input.attr('min') + ";" + input.attr('max') + "]");
+				input.val(defaultParameters[index]);
+				return defaultParameters[index];
+			}
+		}
+	}
+}
+
+function writeParameter(position, value){
 	var nth = 0;
 	SYSCFG = SYSCFG.replace(/[^[]+(?=\])/g, function(match) {
 		nth++;
-		if (nth == position+1) {return text}
+		if (nth == position+1) {return value}
 		else {return match}
 	});
+	updateParameters();
+	// console.log("write par" + position + " = " + value);
 }
 
 function SaveSYSCFG() {
@@ -211,7 +234,8 @@ function updateParameters() {
 	parameters = SYSCFG.match(/[^[]+(?=\])/g);//this generates an array that contains all the values found between brackets []
 	version = SYSCFG.match(/v[^{]+(?=\})/g);
 	version = parseInt(version[0].substring(1).replace('.', ''), 10);
-	console.log(version);
+	// console.log(version);
+	// console.log(parameters);
 }
 
 function updateDate() {
@@ -236,7 +260,7 @@ function updateDate() {
 
 	var mobiusDate = [year, '/', month, '/', day, '-', hours, ':', minutes, ':', '00' ].join("");
 
-	changeParameter(0, mobiusDate);
+	writeParameter(0, mobiusDate);
 }
 
 function checkMinMax(i) {
@@ -275,5 +299,57 @@ function checkMinMax(i) {
 		parameters[i] = defaultParameters[i];
 		console.log("wrong" + i);
 		alert("One or more parameters from your SYSCFG.TXT file are out of their acceptable range.\nI'll use defaults instead.");
+	}
+}
+
+function checkConflictsIn() {
+	if (parameters[26]==1){
+		if (parameters[16]!=0 || parameters[6]!=0) {
+			alert("Motion detection can't be used together with timelapse and/or automatic power off.\n\nMotion detection will be switched off.");
+			displayParameter(26, 0);
+			writeParameter(26, 0);
+		}
+	}
+
+	if (parameters[6]!=0){
+		if (parameters[17]!=0 || parameters[18]!=0){
+			alert("Time lapse can't be used together with One Power Button to Auto Record and Auto Record with external power.\n\nTime lapse will be switched off.");
+			displayParameter(6, 0);
+			writeParameter(6, 0);
+		}
+	}
+
+	if (parameters[9]==1){
+		if (parameters[8]==0 || parameters[8]==1) {}
+		else {
+			alert("Movie loop recording works only when Movie cycle time is set to 3 or 5 minutes.\n\nMovie loop recording will be switched off.");
+			displayParameter(9, 0);
+			writeParameter(9, 0);
+		}
+	}
+}
+
+function checkConflictsOut() {
+	if (readInputValue(26)==1){
+		if (readInputValue(16)!=0 || readInputValue(6)!=0) {
+			alert("Motion detection can't be used together with timelapse and/or automatic power off.\n\nMotion detection will be switched off.");
+			displayParameter(26, 0);
+		}
+	}
+
+	if (readInputValue(6)!=0){
+		if (readInputValue(17)!=0 || readInputValue(18)!=0){
+			alert("Time lapse can't be used together with One Power Button to Auto Record and Auto Record with external power.\n\nTime lapse will be switched off.");
+			displayParameter(6, 0);
+		}
+	}
+
+	if (readInputValue(9)==1){
+		console.log(readInputValue(8));
+		if (readInputValue(8)==0 || readInputValue(8)==1) {} //questo caso va bene, tutti gli altri (else) no
+		else {
+			displayParameter(9, 0);
+			alert("Movie loop recording works only when Movie cycle time is set to 3 or 5 minutes.\n\nMovie loop recording will be switched off.");
+		}
 	}
 }

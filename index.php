@@ -3,6 +3,7 @@
 	$load_scripts = array("mobius.min.js", "FileSaver.js", "estetica.js");
 ?>
 <?php include('includes/header.php'); ?>
+<?php include('includes/news.php'); ?>
 		
 		<div class="topBarContainer" data-minFw=59>
 			<div class="container_12">
@@ -14,6 +15,14 @@
 
 		<div class="wrapper">
 			<div class="container_12 getting_started">
+				<div class="grid_12">
+					<?php if (isset($title)) {echo "<h1 class='primo'>" . $title . '</h1>'; } ?>
+				</div>
+				<div class="clear"></div>
+				<div class="grid_12">
+					<?php if (isset($message)) {echo $message;} ?>
+				</div>
+
 				<div class="grid_12">
 					<h1 class="primo">Getting started</h1>
 				</div>
@@ -35,19 +44,19 @@
 
 					<div class="radioTabs" title="1">
 						<input type="radio" id="videoMode1-0" name="1" value=0 maxval=3 minval=0 />
-						<label for="videoMode1-0">1080 <br/> <span class="big">Wide</span> <br/> <span class="small">30fps</span></label>
+						<label for="videoMode1-0">1080<br/><span class="big">Wide</span><br/><span class="small">30fps</span></label>
 						
 						<input type="radio" id="videoMode1-1" name="1" value=1 />
-						<label for="videoMode1-1">1080 <br/> <span class="big">Narrow</span>  <br/> <span class="small">30fps</span></label>
+						<label for="videoMode1-1">1080<br/><span class="big">Narrow</span><br/><span class="small">30fps</span></label>
 						
 						<input type="radio" id="videoMode1-2" name="1" value=2 />
-						<label for="videoMode1-2">720 <br/> <span class="big">Wide</span>  <br/> <span class="small">30fps</span></label>
+						<label for="videoMode1-2">720<br/><span class="big">Wide</span><br/><span class="small">30fps</span></label>
 						
 						<input type="radio" id="videoMode1-3" name="1" value=3 />
-						<label for="videoMode1-3">720 <br/> <span class="big">Narrow</span>  <br/> <span class="small">30fps</span></label>
+						<label for="videoMode1-3">720<br/><span class="big">Narrow</span><br/><span class="small">30fps</span></label>
 						
 						<input type="radio" id="videoMode1-4" name="1" value=4 />
-						<label for="videoMode1-4">720 <br/> <span class="big">Narrow</span>  <br/> <span class="small">60fps</span></label>
+						<label for="videoMode1-4">720<br/><span class="big">Narrow</span><br/><span class="small">60fps</span></label>
 					</div><!-- radioTabs -->
 					
 					<h2>Picture rotation</h2>
@@ -67,19 +76,19 @@
 					<h2>Resolution</h2>
 					<div class="radioTabs" title="3">
 						<input type="radio" id="videoMode2-0" name="3" value=0 maxval=3 minval=0 />
-						<label for="videoMode2-0">1080 <br/> <span class="big">Wide</span> <br/> <span class="small">30fps</span></label>
+						<label for="videoMode2-0">1080<br/><span class="big">Wide</span><br/><span class="small">30fps</span></label>
 						
 						<input type="radio" id="videoMode2-1" name="3" value=1 />
-						<label for="videoMode2-1">1080 <br/> <span class="big">Narrow</span>  <br/> <span class="small">30fps</span></label>
+						<label for="videoMode2-1">1080<br/><span class="big">Narrow</span><br/><span class="small">30fps</span></label>
 						
 						<input type="radio" id="videoMode2-2" name="3" value=2 />
-						<label for="videoMode2-2">720 <br/> <span class="big">Wide</span>  <br/> <span class="small">30fps</span></label>
+						<label for="videoMode2-2">720<br/><span class="big">Wide</span><br/><span class="small">30fps</span></label>
 						
 						<input type="radio" id="videoMode2-3" name="3" value=3 />
-						<label for="videoMode2-3">720 <br/> <span class="big">Narrow</span>  <br/> <span class="small">30fps</span></label>
+						<label for="videoMode2-3">720<br/><span class="big">Narrow</span><br/><span class="small">30fps</span></label>
 						
 						<input type="radio" id="videoMode2-4" name="3" value=4 />
-						<label for="videoMode2-4">720 <br/> <span class="big">Narrow</span>  <br/> <span class="small">60fps</span></label>
+						<label for="videoMode2-4">720<br/><span class="big">Narrow</span><br/><span class="small">60fps</span></label>
 					</div><!-- radioTabs -->
 
 					<h2>Picture rotation</h2>
@@ -112,9 +121,9 @@
 				</div><!-- grid_4 -->
 
 				<div class="grid_8">
-					<h2>timelapse interval</h2>
+					<h2>Timelapse interval</h2>
 					<div class="radioTabs" title="6">
-						<input type="radio" id="timeLapse-0" name="6" value=0 /><label for="timeLapse-0">off</label>
+						<input type="radio" id="timeLapse-0" name="6" value=0 /><label for="timeLapse-0">Off</label>
 						<input type="radio" id="timeLapse-1" name="6" value=1 /><label for="timeLapse-1">0,25 sec</label>
 						<input type="radio" id="timeLapse-2" name="6" value=2 /><label for="timeLapse-2">0,5 sec</label>
 						<input type="radio" id="timeLapse-3" name="6" value=3 /><label for="timeLapse-3">1 sec</label>
@@ -171,14 +180,14 @@
 				
 				<div class="clear"></div>
 
-				<div class="grid_6">
+				<div class="grid_3">
 					<h2>Movie quality</h2>
 					<div class="radioTabs" title="13">
 						<input type="radio" id="movieQuality-0" name="13" value=0 /><label for="movieQuality-0">Super</label>
 						<input type="radio" id="movieQuality-1" name="13" value=1 /><label for="movieQuality-1">Standard</label>
 						<input type="radio" id="movieQuality-2" name="13" value=2 /><label for="movieQuality-2">Low</label>
 					</div>
-				</div><!-- grid_6 -->
+				</div><!-- grid_3 -->
 				<div class="grid_3">
 					<h2>Wide dynamic range</h2>
 					<div class="radioTabs" title="14">
@@ -191,6 +200,13 @@
 					<div class="radioTabs" title="11">
 						<input type="radio" id="movieSound-0" name="11" value=0 /><label for="movieSound-0">Off</label>
 						<input type="radio" id="movieSound-1" name="11" value=1 /><label for="movieSound-1">On</label>
+					</div>
+				</div><!-- grid_3 -->
+				<div class="grid_3">
+					<h2>Sync date/time</h2>
+					<div class="radioTabs" title="dateTime" data-tip="This will write the timestamp ">
+						<input type="radio" id="dateTime-0" name="dateTime" value=0 checked/><label for="dateTime-0">Leave as is</label>
+						<input type="radio" id="dateTime-1" name="dateTime" value=1 /><label for="dateTime-1">Sync to pc</label>
 					</div>
 				</div><!-- grid_3 -->
 
