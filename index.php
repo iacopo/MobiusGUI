@@ -4,7 +4,7 @@
 ?>
 <?php include('includes/header.php'); ?>
 <?php include('includes/news.php'); ?>
-		
+
 		<div class="topBarContainer" data-minFw=59>
 			<div class="container_12">
 				<div class="topBar grid_12">
@@ -27,7 +27,7 @@
 					<h1 class="primo">Getting started</h1>
 				</div>
 				<div class="grid_12 colonne">
-					<p>Generate a SYSCFG.TXT file from your mobius camera by following the instructions on <a href="http://www.mytempfiles.info/mobius/" target="_blank">the user manual</a>.</p>
+					<p>Generate a SYSCFG.TXT file from your Mobius camera by following the instructions on <a href="http://www.mytempfiles.info/mobius/" target="_blank">the user manual</a>.</p>
 					<p>Once you have the file, you may drag it over the area above, once you'll drop it there, you will be able to configure every parameter and save a new SYSCFG.TXT file to your computer or directly onto the camera MicroSD card.</p>
 					<p>The last step will be uploading this file to the camera MicroSD card and loading it following once again the instructions you find on the user manual</p>
 					<p>&nbsp;</p>
@@ -190,9 +190,10 @@
 				</div><!-- grid_3 -->
 				<div class="grid_3">
 					<h2>Wide dynamic range</h2>
-					<div class="radioTabs" title="14">
+					<div class="radioTabs" title="14" >
 						<input type="radio" id="WDR-0" name="14" value=0 /><label for="WDR-0">Off</label>
 						<input type="radio" id="WDR-1" name="14" value=1 /><label for="WDR-1">On</label>
+						<input type="radio" id="WDR-2" name="14" value=2 data-minFw=117 /><label for="WDR-2">Low-light</label>
 					</div>
 				</div><!-- grid_3 -->
 				<div class="grid_3">
@@ -203,10 +204,11 @@
 					</div>
 				</div><!-- grid_3 -->
 				<div class="grid_3">
-					<h2>Sync date/time</h2>
+					<h2>Update date/time</h2>
 					<div class="radioTabs" title="dateTime" data-tip="This will write the timestamp ">
-						<input type="radio" id="dateTime-0" name="dateTime" value=0 checked/><label for="dateTime-0">Leave as is</label>
-						<input type="radio" id="dateTime-1" name="dateTime" value=1 /><label for="dateTime-1">Sync to pc</label>
+						<input type="radio" id="dateTime-0" name="dateTime" value=0 checked/><label for="dateTime-0">No</label>
+						<input type="radio" id="dateTime-1" name="dateTime" value=1 /><label for="dateTime-1">Now</label>
+						<input type="radio" id="dateTime-2" name="dateTime" value=2 /><label for="dateTime-2">In 2 min</label>
 					</div>
 				</div><!-- grid_3 -->
 

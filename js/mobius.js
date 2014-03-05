@@ -9,7 +9,7 @@ var parameters;
 var defaultParameters;
 var version;
 var userLoaded;
-var acceptedFirmware = [59, 113]
+var acceptedFirmware = [59, 113, 117]
 
 $(document).ready(function(){
 	$.get(defaultCFG_URL, function(content) {
@@ -29,6 +29,7 @@ $(document).ready(function(){
 	$('.button').click(applySettings);
 	$("[data-minFw=59]").hide();
 	$("[data-minFw=113]").hide();
+	$("[data-minFw=117]").hide();
 });
 
 function handleDragOver(evt) {
@@ -73,12 +74,17 @@ function handleFileSelect(evt) {
 
 				//faccio un loop per tutte le versioni di firmware accettate, attivo le parti del sito il cui campo "data-minFw" ha un valore minore o uguale alla versione individuata.
 				for (var i = 0; i < acceptedFirmware.length; i++){
+
+					element = "[data-minFw="+acceptedFirmware[i]+"]";
+
 					if (version >= acceptedFirmware[i]){
 						$(".getting_started").hide();
-						$("[data-minFw="+acceptedFirmware[i]+"]").fadeIn();
+						$(element).fadeIn();
+						$(element).removeAttr('disabled', 'disabled');
 					}
 					else {
-						$("[data-minFw="+acceptedFirmware[i]+"]").hide();
+						$(element).hide();
+						$(element).attr('disabled', 'disabled');
 					}
 				}
 			}
@@ -132,10 +138,13 @@ function applySettings() {
 
 	writeParameter(12, videosFlip);
 
-	if (readInputValue('dateTime') == 1) { updateDate(); }
+	if (readInputValue('dateTime') == 1) { updateDate(0); }
+	else if (readInputValue('dateTime') == 2) { updateDate(2); }
 	else {writeParameter(0, "????/??/??-??:??:??");}
 
-	SaveSYSCFG(); //then save the file!
+
+	if (navigator.userAgent.match(/Firefox/i) != null) {SaveSYSCFG();} //Save from javascript in Firefox
+	else {saveWithPHP();} //save from php with every other browser
 }
 
 function displaySettings(){
@@ -194,7 +203,7 @@ function readInputValue(index){
 			if ($('[name='+index+']:checked').val() == 0) {return "0";} //this is because javascript hates values of 0
 			else {return parseInt( $('[name='+index+']:checked').val() );}
 		}
-		else if ( input.is('[type=number]') )	{ 
+		else if ( input.is('[type=number]') )	{
 			if ( parseInt(input.attr('min')) <= parseInt(input.val()) && parseInt(input.val()) <= parseInt(input.attr('max')) ){
 				if (input.val() == 0) {return "0";} //this is because javascript hates values of 0
 				else {return parseInt( input.val() );}
@@ -234,31 +243,38 @@ function updateParameters() {
 	parameters = SYSCFG.match(/[^[]+(?=\])/g);//this generates an array that contains all the values found between brackets []
 	version = SYSCFG.match(/v[^{]+(?=\})/g);
 	version = parseInt(version[0].substring(1).replace('.', ''), 10);
-	// console.log(version);
+	//console.log(version);
 	// console.log(parameters);
 }
 
-function updateDate() {
+function twoDigits(n){
+    return n > 9 ? "" + n: "0" + n;
+}
+
+function updateDate(offset) {
 	var jsDate = new Date();
+
+	jsDate.setMinutes(jsDate.getMinutes()+offset);
 
 	var year = jsDate.getFullYear();
 	var month = jsDate.getMonth();
 	var day = jsDate.getDate();
 	var hours = jsDate.getHours();
 	var minutes = jsDate.getMinutes();
+	var seconds = jsDate.getSeconds();
 
 	month = month + 1 + "";
-	day = day + "";
-	hours = hours + "";
-	minutes = minutes + "";
+	// day = day + "";
+	// hours = hours + "";
+	// minutes = minutes + "";
 
-	if (month.length == 1){month = "0" + month}
-	if (day.length == 1){day = "0" + day}
+	month = twoDigits(month);
+	day = twoDigits(day);
+	hours = twoDigits(hours);
+	minutes = twoDigits(minutes);
+	seconds = twoDigits(seconds);
 
-	if (hours.length == 1){hours = "0" + hours}
-	if (minutes.length == 1){minutes = "0" + minutes}
-
-	var mobiusDate = [year, '/', month, '/', day, '-', hours, ':', minutes, ':', '00' ].join("");
+	var mobiusDate = [year, '/', month, '/', day, '-', hours, ':', minutes, ':', seconds ].join("");
 
 	writeParameter(0, mobiusDate);
 }
@@ -352,4 +368,57 @@ function checkConflictsOut() {
 			alert("Movie loop recording works only when Movie cycle time is set to 3 or 5 minutes.\n\nMovie loop recording will be switched off.");
 		}
 	}
+}
+
+function saveWithPHP() {
+	$('<form action="savefile.php" method="POST">' + 
+	'<input type="hidden" name="text" value="' + SYSCFG + '">' +
+	'</form>').submit();
+	if (readInputValue('dateTime') == 2) {
+		clearTimeout(timeout);
+		mins = 2;
+		secs = mins * 60;
+		countdown();
+		$('html, body').animate({scrollTop:0}, 'slow');
+	}
+	else {
+		clearTimeout(timeout);
+		$('#drop_area span').text('Load your file to the camera and follow the update procedure.');
+	}
+}
+
+
+
+//I need to set some globals
+var timeout;
+var secs;
+var mins;
+
+function countdown() {
+	timeout = setTimeout('Decrement()',1000);
+}
+function Decrement() {
+	if (document.getElementById) {
+		
+		if (secs < 0) {
+			$('#drop_area span').text('Press mode + power button now!');
+		}
+		else if (secs < 59) {
+			$('#drop_area span').text('Load your file and get ready to press mode + power button in 00:' + twoDigits(secs));
+		} else {
+			$('#drop_area span').text('Load your file and get ready to press mode + power button in ' + getminutes() + ':' + getseconds());
+		}
+		secs--;
+		timeout = setTimeout('Decrement()',1000);
+	}
+}
+
+function getminutes() {
+	// minutes is seconds divided by 60, rounded down
+	mins = Math.floor(secs / 60);
+	return twoDigits(mins);
+}
+function getseconds() {
+	// take mins remaining (as seconds) away from total seconds remaining
+	return twoDigits(secs-Math.round(mins *60));
 }

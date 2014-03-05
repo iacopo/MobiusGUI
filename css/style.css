@@ -226,6 +226,8 @@ a, a:visited {
 
 	transition: background-color;
 	-webkit-transition: background-color .3s;
+
+	font-family: monospace;
 }
 
 #drop_area.drag{
@@ -322,7 +324,7 @@ h2 {
 }
 
 input[type=radio]{
-	display:none;
+	display:none!important;
 	/*margin:10px;*/
 }
 
@@ -342,6 +344,11 @@ input[type=radio] + label{
 	padding: 8px 12px;
 	background-color: #E7E7E7;
 	color: #666;
+}
+
+input[type=radio][disabled] + label{
+	background-color: #efefef;
+	color: #ddd;
 }
 
 .radioTabs input[type=radio]:first-child + label{

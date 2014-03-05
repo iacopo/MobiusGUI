@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>Mobius GUI</title>
+	<title>Mobius GUI<?php if(isset($title)) { echo " &mdash; " . $title; } ?></title>
+	<meta name="description" content="A simple, slick web-based interface to set all the parameters on your Mobius action camera.">
 
 	<link href='http://fonts.googleapis.com/css?family=Exo+2:400,700|Droid+Serif' rel='stylesheet' type='text/css'>
 
@@ -16,7 +17,7 @@
 		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-		ga('create', 'UA-2674259-9', 'iacopoboccalari.com');
+		ga('create', 'UA-2674259-9', 'mobiusgui.com');
 		ga('send', 'pageview');
 	</script>
 </head>
@@ -24,7 +25,7 @@
 	<div class="page-wrap">
 		<div class="header">
 			<div class="container_12">
-				<div class="grid_4"><a href="index.php"><img src="img/logo.png" alt="Mobius GUI" class="logo"></a></div>
+				<div class="grid_4"><a href="/"><img src="img/logo.png" alt="Mobius GUI" class="logo"></a></div>
 				<div class="grid_8">
 					<ul class="menu">
 						<li><a href="instructions.php">Instructions</a></li>

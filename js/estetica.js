@@ -1,5 +1,9 @@
 $(document).ready(function () {
 
+	scorriBarra();
+});
+
+function scorriBarra() {
 	var length = $('.header').height();
 
 	$(window).scroll(function () {
@@ -21,4 +25,4 @@ $(document).ready(function () {
 			});
 		}
 	});
-});
+}
