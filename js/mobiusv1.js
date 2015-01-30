@@ -9,7 +9,6 @@ var parameters;
 var defaultParameters;
 var version;
 var userLoaded;
-var acceptedFirmware = [59, 113, 117, 120]
 
 $(document).ready(function(){
 	$.get(defaultCFG_URL, function(content) {
@@ -19,13 +18,16 @@ $(document).ready(function(){
 		defaultParameters = parameters;
 		displaySettings();
 	});
+
+	SYSCFG = $('pre').text();
+	updateParameters();
+	displaySettings();
+	console.log(SYSCFG);
 	
 	$('.button').click(applySettings);
 	
 	// $("[data-minFw]").hide();
 
-	updateParameters();
-	// console.log(SYSCFG);
 	$('#drop_area span').text('File loaded successfully - firmware version ' + version/100);
 	displaySettings();
 	userLoaded = 1;

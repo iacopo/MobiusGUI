@@ -1,0 +1,1 @@
+var my_javascript_variable = <?php echo $_POST['my_post'] ?>;
